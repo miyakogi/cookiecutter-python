@@ -1,4 +1,8 @@
 {
+  "full_name": "Hiroyuki Takagi",
+  "email": "miyako.dev@gmail.com",
+  "github_username": "miyakogi",
+
   "project_name": "New Project",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
   "project_short_description": "short description for this project.",
