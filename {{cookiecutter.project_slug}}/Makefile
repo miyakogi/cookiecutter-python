@@ -29,21 +29,24 @@ help:
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
 clean-build: ## remove build artifacts
-	rm -fr build/
-	rm -fr dist/
-	rm -fr .eggs/
-	find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -f {} +
+	@echo "Remove build files (build/, dist/, .egg*, ...)."
+	@rm -fr build/
+	@rm -fr dist/
+	@rm -fr .eggs/
+	@find . -name '*.egg-info' -exec rm -fr {} +
+	@find . -name '*.egg' -exec rm -f {} +
 
 clean-pyc: ## remove Python file artifacts
-	find . -name '*.pyc' -exec rm -f {} +
-	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f {} +
-	find . -name '__pycache__' -exec rm -fr {} +
+	@echo "Remove python files (*.py[co], __pycache__, ...)."
+	@find . -name '*.pyc' -exec rm -f {} +
+	@find . -name '*.pyo' -exec rm -f {} +
+	@find . -name '*~' -exec rm -f {} +
+	@find . -name '__pycache__' -exec rm -fr {} +
 
 clean-test: ## remove test and coverage artifacts
-	rm -f .coverage
-	rm -fr htmlcov/
+	@echo "Remove test/coverage files (.coverage, htmlcov/)."
+	@rm -f .coverage
+	@rm -fr htmlcov/
 
 .PHONY: green
 green:  ## run green test
@@ -76,10 +79,11 @@ pydocstyle:  ## run pydocstyle check
 # -n option is better but type hints refs are not found
 .PHONY: docs
 docs:  ## build document
-	@echo "Sphinx build start"
+	@echo "Sphinx build start."
 	@cd docs && \
 	sphinx-build -q -E -W -b html . _build/html && \
 	cd ../
+	@echo "Sphinx build done."
 
 .PHONY: sphinx
 sphinx:  ## run document build server
