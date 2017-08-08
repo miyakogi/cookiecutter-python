@@ -1,4 +1,4 @@
-autostash PYVENV_NAME=wdom
+autostash PYVENV_NAME={{ cookiecutter.project_slug }}
 autostash PROJECT_ROOT=${HOME}/Projects/{{ cookiecutter.project_slug }}
 python -m venv "$vdir"
 [[ -e ${HOME}/.pyvenv/{{ cookiecutter.project_slug }}/bin/activate ]] && \
