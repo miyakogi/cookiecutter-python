@@ -60,3 +60,11 @@ target/
 
 # pyenv python configuration file
 .python-version
+
+###### direnv ######
+.direnv
+.envrc
+
+###### zsh-autoenv ######
+.autoenv.zsh
+.autoenv_leave.zsh
