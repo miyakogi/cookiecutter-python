@@ -28,7 +28,6 @@ help:
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
-
 clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
@@ -43,44 +42,53 @@ clean-pyc: ## remove Python file artifacts
 	find . -name '__pycache__' -exec rm -fr {} +
 
 clean-test: ## remove test and coverage artifacts
-	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
 
-lint: ## check style with flake8
-	flake8 {{ cookiecutter.project_slug }} tests
+.PHONY: green
+green:  ## run green test
+	@echo "Run green."
+	@cd maint && \
+	green -c ../.green ../{{ cookiecutter.project_slug }}
 
-test: ## run tests quickly with the default Python
-	python setup.py test
+green-single:  ## run green with a single process
+	@echo "Run green with a single process."
+	@cd maint && \
+	green -s 1 -c ../.green ../{{ cookiecutter.project_slug }}
 
-test-all: ## run tests on every Python version with tox
-	tox
+green-cov:  # run green and calculate coverage
+	@echo "Run green with coverage."
+	@cd maint && \
+	green -r -c ../.green ../{{ cookiecutter.project_slug }}
 
-coverage: ## check code coverage quickly with the default Python
-		coverage run --source {{ cookiecutter.project_slug }} setup.py test
-		coverage report -m
-		coverage html
-		$(BROWSER) htmlcov/index.html
+.PHONY: flake8
+flake8:  ## run flake8 syntax check
+	flake8 setup.py {{ cookiecutter.project_slug }}
 
-docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/{{ cookiecutter.project_slug }}.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ {{ cookiecutter.project_slug }}
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	$(BROWSER) docs/_build/html/index.html
+.PHONY: mypy
+mypy:  ## run mypy type check
+	mypy {{ cookiecutter.project_slug }}
 
-servedocs: docs ## compile the docs watching for changes
-	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
+.PHONY: pydocstyle
+pydocstyle:  ## run pydocstyle check
+	pydocstyle {{ cookiecutter.project_slug }}
 
-release: clean ## package and upload a release
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+# -n option is better but type hints refs are not found
+.PHONY: docs
+docs:  ## build document
+	@echo "Sphinx build start"
+	@cd docs && \
+	sphinx-build -q -E -W -b html . _build/html && \
+	cd ../
 
-dist: clean ## builds source and wheel package
-	python setup.py sdist
-	python setup.py bdist_wheel
-	ls -l dist
+.PHONY: sphinx
+sphinx:  ## run document build server
+	@echo "### Sphinx Build Server Start ###"
+	@python docs/server.py
 
-install: clean ## install the package to the active Python's site-packages
-	python setup.py install
+.PHONY: check
+check:  ## run flake8, mypy, pydocstyle, sphinx-build
+	@doit --verbosity 1 --process 4 --parallel-type thread
+
+.PHONY: test
+test: check green-cov  ## run style check and test
