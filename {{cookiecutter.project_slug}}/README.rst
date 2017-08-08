@@ -14,8 +14,8 @@
         :target: https://travis-ci.org/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}
         :alt: Latest Build Status
 
-.. image:: https://codecov.io/github/miyakogi/wdom/coverage.svg?branch=dev
-        :target: https://codecov.io/github/miyakogi/wdom?branch=dev
+.. image:: https://codecov.io/github/miyakogi/{{ cookiecutter.project_slug }}/coverage.svg?branch=dev
+        :target: https://codecov.io/github/miyakogi/{{ cookiecutter.project_slug }}?branch=dev
         :alt: Latest Test Coverage
 
 {{ cookiecutter.project_short_description }}
