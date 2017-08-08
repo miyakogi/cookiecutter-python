@@ -5,4 +5,5 @@ livereload
 flake8
 mypy
 pydocstyle
+doit
 green
