@@ -5,9 +5,15 @@ from os import path
 from setuptools import setup
 
 basedir = path.dirname(path.abspath(__file__))
-with open(path.join(basedir, 'README.rst')) as readme_file:
-    readme = readme_file.read()
+readme_file = path.join(basedir, 'README.md')
+with open(readme_file) as f:
+    src = f.read()
 
+try:
+    from m2r import M2R
+    readme = M2R()(src)
+except ImportError:
+    readme = src
 
 requirements = [
     # TODO: put package requirements here
