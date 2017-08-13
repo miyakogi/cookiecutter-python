@@ -10,7 +10,7 @@
 {{ cookiecutter.project_short_description }}
 
 * Free software: {{ cookiecutter.license }}
-* Documentation: https://{{ cookiecutter.project_slug | replace("_", "-") }}.readthedocs.io.
+* Documentation: https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_slug }}
 
 ## Features
 
