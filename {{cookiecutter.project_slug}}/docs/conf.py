@@ -133,7 +133,19 @@ html_theme = 'alabaster'
 # Theme options are theme-specific and customize the look and feel of a
 # theme further.  For a list of options available for each theme, see the
 # documentation.
-#html_theme_options = {}
+html_theme_options = {
+    'description': '{{ cookiecutter.project_short_description }}',
+    'github_user': '{{ cookiecutter.github_username }}',
+    'github_repo': '{{ cookiecutter.project_slug }}',
+    'github_banner': True,
+    'github_type': 'mark',
+    'github_count': False,
+    'font_family': '"Charis SIL", "Noto Serif", serif',
+    'head_font_family': 'Lato, sans-serif',
+    'code_font_family': '"Code new roman", "Ubuntu Mono", monospace',
+    'code_font_size': '1rem',
+}
+
 
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
