@@ -16,4 +16,4 @@ install:
 script:
   - tox
 after_success:
-  - if [[ $TRAVIS_PYTHON_VERSION == 3.6 ]]; then coverage erase && PYTHONPATH=${TRAVIS_BUILD_DIR} python -m coverage run --source {{ cookiecutter.project_slug }} -m unittest discover {{ cookiecutter.project_slug }} && codecov; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 3.6 ]]; then coverage erase && PYTHONPATH=${TRAVIS_BUILD_DIR} python -m coverage run --source {{ cookiecutter.project_slug }} -m unittest discover {{ cookiecutter.project_slug }} && codecov $TRAVIS_BRANCH; fi
