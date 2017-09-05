@@ -66,7 +66,7 @@ green-cov:  # run green and calculate coverage
 
 .PHONY: flake8
 flake8:  ## run flake8 syntax check
-	flake8 setup.py {{ cookiecutter.project_slug }}
+	flake8 setup.py {{ cookiecutter.project_slug }} tests
 
 .PHONY: mypy
 mypy:  ## run mypy type check

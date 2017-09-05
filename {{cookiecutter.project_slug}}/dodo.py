@@ -17,7 +17,7 @@ DOIT_CONFIG = {
 def task_flake8():
     """Run flake8 check."""
     return {
-        'actions': ['flake8 setup.py {{ cookiecutter.project_slug }}'],
+        'actions': ['flake8 setup.py {{ cookiecutter.project_slug }} tests'],
     }
 
 
