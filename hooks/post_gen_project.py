@@ -8,7 +8,7 @@ import sys
 
 def make_venv():
     # create virtualenv
-    print('### Preparing new virtualenv with {} ###'.format(sys.executable))
+    print('Preparing new virtualenv with {}.'.format(sys.executable))
     subprocess.run(['python', '-m', 'venv', '.'])
 
     curdir = Path('.')
@@ -18,35 +18,49 @@ def make_venv():
     else:
         vpython = curdir / 'bin' / 'python'
         # install packages to new env
-        print('### Updating pip and setuptools in virtualenv. ###')
+        print('Updating pip and setuptools in virtualenv.')
         subprocess.run([
-            str(vpython), '-m', 'pip', 'install', '-U', 'pip', 'setuptools',
+            str(vpython), '-m', 'pip', 'install', '-q', '-U', 'pip', 'setuptools',
         ])
-        print('### Installing jedi and ptpython to virtualenv. ###')
+        print('Installing jedi and ptpython to virtualenv.')
         # python3 -m pip install jedi ptpython pygments_style_railscasts
         subprocess.run([
-            str(vpython), '-m', 'pip', 'install', 'jedi', 'ptpython', 'pygments_style_railscasts',
+            str(vpython), '-m', 'pip', 'install', '-q', 'jedi', 'ptpython', 'pygments_style_railscasts',
         ])
-        print('### Installing dev-dependencies to virtualenv. ###')
+        print('Installing dev-dependencies to virtualenv.')
         # python3 -m pip install -r requirements-dev.txt
         subprocess.run([
-            str(vpython), '-m', 'pip', 'install', '-r', 'requirements-dev.txt',
+            str(vpython), '-m', 'pip', 'install', '-q', '-r', 'requirements-dev.txt',
         ])
 
 
-def enable_autoenv():
+def authorize_autoenv():
     Path('autoenv.zsh').replace('.autoenv.zsh')
     Path('autoenv_leave.zsh').replace('.autoenv_leave.zsh')
+    print('Authorizing autoenv scripts.')
+    p = subprocess.Popen(
+        'source $HOME/.zsh/zsh-autoenv/autoenv.zsh',
+        shell=True, executable='zsh',
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+        stdin=subprocess.PIPE,
+    )
+    p.communicate(input=b'yes')
+    p.wait()
+    subprocess.run(
+        'source $HOME/.zsh/zsh-autoenv/autoenv.zsh && '
+        '_autoenv_authorize .autoenv_leave.zsh',
+        shell=True, executable='zsh',
+    )
 
 
 def init_git():
-    print('### Initializing git repository. ###')
+    print('Initializing git repository.')
     subprocess.run(['git', 'init'])
 
 
 def main():
     make_venv()
-    enable_autoenv()
+    authorize_autoenv()
     init_git()
 
 
