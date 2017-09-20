@@ -5,3 +5,4 @@ autostash PROJECT_ROOT=${HOME}/Projects/{{ cookiecutter.project_slug }}
   source ${PROJECT_ROOT}/bin/activate
 autostash PYTHONPATH=$PROJECT_ROOT${PYTHONPATH:+:}$PYTHONPATH
 autostash MYPYPATH=$PROJECT_ROOT
+autostash VIM_TEST_RUNNER="unittest"
