@@ -1,19 +1,27 @@
 # Config file for automatic testing at travis-ci.org
 # This file will be regenerated if you run travis_pypi_setup.py
 
+sudo: false
+dist: trusty
+
 language: python
-python:
-  - 3.5
-  - 3.6
+matrix:
+  include:
+    - python: "3.5"
+      env: TOXENV="py35"
+    - python: "3.6"
+      env: TOXENV="py36"
+    - python: "3.6"
+      env: TOXENV="flake8,mypy,pydocstyle,docs"
+
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 
 install:
-  - pip install -U tox-travis
-  - pip install -U coverage codecov
+  - pip install tox codecov
 
 # command to run tests, e.g. python setup.py test
 script:
   - tox
 after_success:
-  - if [[ $TRAVIS_PYTHON_VERSION == 3.6 ]]; then coverage erase && PYTHONPATH=${TRAVIS_BUILD_DIR} python -m coverage run --source {{ cookiecutter.project_slug }} -m unittest discover {{ cookiecutter.project_slug }} && codecov $TRAVIS_BRANCH; fi
+  - if [[ $TOXENV == py36 ]]; then codecov -b $TRAVIS_BRANCH; fi
