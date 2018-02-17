@@ -1,37 +1,42 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
 from pathlib import Path
 import subprocess
 import sys
 
 
 def make_venv():
-    # create virtualenv
-    print('Preparing new virtualenv with {}.'.format(sys.executable))
-    subprocess.run(['python', '-m', 'venv', '.'])
+    name = '{{ cookiecutter.project_slug }}'
 
-    curdir = Path('.')
-    activation_script = curdir / 'bin' / 'activate'
+    # create virtualenv
+    subprocess.run(
+        'source $VIRTUALENVWRAPPER_SCRIPT && mkvirtualenv {}'.format(name),
+        shell=True, executable='zsh',
+    )
+    venvdir = Path(os.environ.get('WORKON_HOME')) / name
+    activation_script = venvdir / 'bin' / 'activate'
+
     if not activation_script.is_file():
-        print('Activation script not exists.')
-    else:
-        vpython = curdir / 'bin' / 'python'
-        # install packages to new env
-        print('Updating pip and setuptools in virtualenv.')
-        subprocess.run([
-            str(vpython), '-m', 'pip', 'install', '-q', '-U', 'pip', 'setuptools',
-        ])
-        print('Installing jedi and ptpython to virtualenv.')
-        # python3 -m pip install jedi ptpython pygments_style_railscasts
-        subprocess.run([
-            str(vpython), '-m', 'pip', 'install', '-q', 'jedi', 'ptpython', 'pygments_style_railscasts',
-        ])
-        print('Installing dev-dependencies to virtualenv.')
-        # python3 -m pip install -r requirements-dev.txt
-        subprocess.run([
-            str(vpython), '-m', 'pip', 'install', '-q', '-r', 'requirements-dev.txt',
-        ])
+        raise FileNotFoundError('Activation script not exists.')
+
+    # install packages to new env
+    vpython = venvdir / 'bin' / 'python'
+    print('Updating pip and setuptools in virtualenv.')
+    subprocess.run([
+        str(vpython), '-m', 'pip', 'install', '-q', '-U', 'pip', 'setuptools',
+    ])
+    print('Installing jedi and ptpython to virtualenv.')
+    # python3 -m pip install jedi ptpython pygments_style_railscasts
+    subprocess.run([
+        str(vpython), '-m', 'pip', 'install', '-q', 'jedi', 'ptpython', 'pygments_style_railscasts',
+    ])
+    print('Installing dev-dependencies to virtualenv.')
+    # python3 -m pip install -r requirements-dev.txt
+    subprocess.run([
+        str(vpython), '-m', 'pip', 'install', '-q', '-r', 'requirements-dev.txt',
+    ])
 
 
 def authorize_autoenv():
