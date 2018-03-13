@@ -23,15 +23,23 @@ def make_venv():
 
     # install packages to new env
     vpython = venvdir / 'bin' / 'python'
+
     print('Updating pip and setuptools in virtualenv.')
     subprocess.run([
         str(vpython), '-m', 'pip', 'install', '-q', '-U', 'pip', 'setuptools',
     ])
+
+    print('Install project by dev mode.')
+    subprocess.run([
+        str(vpython), '-m', 'pip', 'install', '-q', '-e', '.',
+    ])
+
     print('Installing jedi and ptpython to virtualenv.')
     # python3 -m pip install jedi ptpython pygments_style_railscasts
     subprocess.run([
         str(vpython), '-m', 'pip', 'install', '-q', 'jedi', 'ptpython', 'pygments_style_railscasts',
     ])
+
     print('Installing dev-dependencies to virtualenv.')
     # python3 -m pip install -r requirements-dev.txt
     subprocess.run([

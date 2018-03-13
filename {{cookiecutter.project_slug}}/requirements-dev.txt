@@ -4,6 +4,7 @@
 flake8
 mypy
 pydocstyle
+readme_renderer
 doit
 green
 livereload

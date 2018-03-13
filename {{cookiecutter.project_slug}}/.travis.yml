@@ -10,18 +10,10 @@ matrix:
     - python: "3.5"
       env: TOXENV="py35"
     - python: "3.6"
-      env: TOXENV="py36"
-    - python: "3.6"
-      env: TOXENV="flake8,mypy,pydocstyle,docs"
-
-
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+      env: TOXENV="py36,doit,codecov"
 
 install:
-  - pip install tox codecov
+  - pip install tox
 
-# command to run tests, e.g. python setup.py test
 script:
   - tox
-after_success:
-  - if [[ $TOXENV == py36 ]]; then codecov -b $TRAVIS_BRANCH; fi
