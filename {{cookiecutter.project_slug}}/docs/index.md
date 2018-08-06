@@ -1,14 +1,15 @@
 Welcome to {{ cookiecutter.project_name }}'s documentation!
 ======================================
 
+.. mdinclude:: ../README.md
+
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-   readme
-   installation
-   usage
+   reference
+   changes
 
 Indices and tables
 ==================
