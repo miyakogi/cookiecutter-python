@@ -37,7 +37,7 @@ def make_venv():
     print('Installing jedi and ptpython to virtualenv.')
     # python3 -m pip install jedi ptpython pygments_style_railscasts
     subprocess.run([
-        str(vpython), '-m', 'pip', 'install', '-q', 'jedi', 'ptpython', 'pygments_style_railscasts',
+        str(vpython), '-m', 'pip', 'install', '-q', 'jedi', 'ptpython',
     ])
 
     print('Installing dev-dependencies to virtualenv.')
