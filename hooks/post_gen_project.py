@@ -34,10 +34,11 @@ def make_venv():
         str(vpython), '-m', 'pip', 'install', '-q', '-e', '.',
     ])
 
-    print('Installing jedi and ptpython to virtualenv.')
+    print('Installing jedi, ptpython, and nosetests to virtualenv.')
+    # nosetests is used by vim-test
     # python3 -m pip install jedi ptpython pygments_style_railscasts
     subprocess.run([
-        str(vpython), '-m', 'pip', 'install', '-q', 'jedi', 'ptpython',
+        str(vpython), '-m', 'pip', 'install', '-q', 'jedi', 'ptpython', 'nose',
     ])
 
     print('Installing dev-dependencies to virtualenv.')
