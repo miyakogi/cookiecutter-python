@@ -8,7 +8,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-env/
 build/
 develop-eggs/
 dist/
@@ -23,9 +22,14 @@ var/
 *.egg
 
 # Virtualenv
+env/
+venv/
 bin/
 lib/
+include/
 lib64
+lib64/
+man/
 pyvenv.cfg
 
 # PyInstaller
@@ -44,11 +48,13 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+.doit.db
 .mypy_cache
 nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+.pytest_chache/
 
 # Translations
 *.mo
