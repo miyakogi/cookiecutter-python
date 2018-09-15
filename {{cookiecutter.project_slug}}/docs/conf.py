@@ -54,7 +54,7 @@ autodoc_member_order = 'bysource'
 # include class' and __init__'s docstring
 autoclass_content = 'both'
 # autodoc_docstring_signature = False
-autodoc_default_flags = ['show-inheritance']
+autodoc_default_options = {'show-inheritance': True}
 
 suppress_warnings = ['image.nonlocal_uri']
 
