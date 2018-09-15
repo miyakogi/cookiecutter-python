@@ -53,11 +53,21 @@ def task_readme():
     }
 
 
+def task_spell():
+    """Run spell chek."""
+    return {
+        'actions': [
+            'pylint --disable all --enable spelling --spelling-dict en_US '
+            '--spelling-private-dict-file spell.txt pyppeteer'
+        ],
+    }
+
+
 def task_check():
     """Run flake8/mypy/pydocstyle/docs tasks."""
     return {
         'actions': None,
-        'task_dep': ['flake8', 'mypy', 'pydocstyle', 'docs', 'readme']
+        'task_dep': ['flake8', 'mypy', 'pydocstyle', 'docs', 'readme', 'spell']
     }
 
 

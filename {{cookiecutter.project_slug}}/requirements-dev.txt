@@ -6,6 +6,8 @@ flake8
 mypy
 pydocstyle
 readme_renderer
+pylint
+git+https://github.com/miyakogi/pyenchant.git
 doit
 pytest
 pytest-xdist
