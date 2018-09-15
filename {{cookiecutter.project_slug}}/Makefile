@@ -48,22 +48,6 @@ clean-test: ## remove test and coverage artifacts
 	@rm -f .coverage
 	@rm -fr htmlcov/
 
-.PHONY: green
-green:  ## run green test
-	@echo "Run green."
-	@cd maint && \
-	green -c ../.green ../{{ cookiecutter.project_slug }}
-
-green-single:  ## run green with a single process
-	@echo "Run green with a single process."
-	@cd maint && \
-	green -s 1 -c ../.green ../{{ cookiecutter.project_slug }}
-
-green-cov:  # run green and calculate coverage
-	@echo "Run green with coverage."
-	@cd maint && \
-	green -r -c ../.green ../{{ cookiecutter.project_slug }}
-
 .PHONY: flake8
 flake8:  ## run flake8 syntax check
 	flake8 setup.py {{ cookiecutter.project_slug }} tests
@@ -81,9 +65,17 @@ pydocstyle:  ## run pydocstyle check
 docs:  ## build document
 	@echo "Sphinx build start."
 	@cd docs && \
-	sphinx-build -q -E -W -j 4 -b html . _build/html && \
+	sphinx-build -q -E -W -j auto -b html . _build/html && \
 	cd ../
 	@echo "Sphinx build done."
+
+.PHONY: readme
+readme:  ## run readme check
+	python setup.py check -r -s
+
+.PHONY: spell
+spell:  # run spell check
+	pylint --disable all --enable spelling --spelling-dict en_US --spelling-private-dict-file spell.txt {{ cookiecutter.project_slug }}
 
 .PHONY: sphinx
 sphinx:  ## run document build server
@@ -92,7 +84,11 @@ sphinx:  ## run document build server
 
 .PHONY: check
 check:  ## run flake8, mypy, pydocstyle, sphinx-build
-	@doit --verbosity 1 --process 4 --parallel-type thread
+	@doit --verbosity 1 --process 12 --parallel-type thread
+
+.PHONY: pytest
+pytest:  # run pytest
+	pytest -n auto tests
 
 .PHONY: test
-test: check green-cov  ## run style check and test
+test: check pytest  ## run style check and test
