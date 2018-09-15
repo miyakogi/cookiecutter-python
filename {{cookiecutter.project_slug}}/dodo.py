@@ -58,7 +58,7 @@ def task_spell():
     return {
         'actions': [
             'pylint --disable all --enable spelling --spelling-dict en_US '
-            '--spelling-private-dict-file spell.txt pyppeteer'
+            '--spelling-private-dict-file spell.txt {{ cookiecutter.project_slug }}'
         ],
     }
 
